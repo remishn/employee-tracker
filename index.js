@@ -1,7 +1,7 @@
 const express = require('express')
-const mysql = reqire('mysql2')
+const mysql = require('mysql2')
 const inquirer = require('inquirer')
-const cTable = require('console.table')
+const consoleTable = require('console.table')
 
 const promptUser = () => {
     inquirer.prompt ([
@@ -83,8 +83,7 @@ const promptUser = () => {
   
         if (choices === "No Action") {
           connection.end()
-      };
-    });
-  };
-
+      }
+    })
+  }
   promptUser()
