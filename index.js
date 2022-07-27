@@ -13,11 +13,6 @@ const connection  = mysql.createConnection({
   database: 'employee_db'
 })
 
-// connection.connect(function(err) {
-//   if (err) throw err;
-
-// });
-
 const promptUser = () => {
     inquirer.prompt ([
       {
@@ -31,12 +26,7 @@ const promptUser = () => {
                   'Add a role', 
                   'Add an employee', 
                   'Update an employee role',
-                  'Update an employee manager',
-                  "View employees by department",
-                  'Delete a department',
-                  'Delete a role',
-                  'Delete an employee',
-                  'View department budgets',
+                  'View employees by department',
                   'No Action']
       }
     ])
@@ -80,20 +70,9 @@ const promptUser = () => {
           employeeDepartment()
         }
   
-        if (choices === "Delete a department") {
-          deleteDepartment()
-        }
   
         if (choices === "Delete a role") {
           deleteRole()
-        }
-  
-        if (choices === "Delete an employee") {
-          deleteEmployee()
-        }
-  
-        if (choices === "View department budgets") {
-          viewBudget()
         }
   
         if (choices === "No Action") {
@@ -118,7 +97,7 @@ const promptUser = () => {
   showRoles = () => {
     console.log('Showing all roles...\n');
   
-    const sql = `SELECT role.id, role.title, department.name AS department
+    const sql = `SELECT role.id, role.title, department.name AS department, salary
                  FROM role
                  INNER JOIN department ON role.department_id = department.id`;
     
@@ -151,25 +130,24 @@ const promptUser = () => {
     });
   };
 
-  addDepartment = () => {
-    inquirer.prompt([
+  addDepartment = async () => {
+     const answer = await inquirer.prompt([
       {
         type: 'input',
         name: 'addDept',
         message: 'add department'
       }
     ])
+    
+    const sql = `INSERT INTO department (name)
+    VALUES (?)`
+    connection.query(sql, answer.addDept, (err, response) => {
+    if (err) throw err
+    console.log(answer.addDept + ' added')
 
-    .then(answer => {
-      const sql = `INSERT INTO department (name)
-                  VALUES (?)`
-      connection.query(sql, answer.addDept, (err, response) => {
-        if (err) throw err
-        console.log(answer.addDept + ' added')
-
-        showDepartments()
-      })
+    showDepartments()
     })
+   
   }
     // add role
 
@@ -212,9 +190,9 @@ const promptUser = () => {
             const dept = deptChoice.dept
             params.push(dept)
 
-            const sql = `INSERT INTO role (title, salary, departmen_id)
+            const sql = `INSERT INTO role (title, salary, department_id)
             VALUES(?, ?, ?)`;
-            connection.query(sql, params, (err, result) => {
+            connection.query(sql, params, (err, response) => {
               if (err) throw err
               console.log(answer.role + ' added')
 
@@ -263,13 +241,13 @@ const promptUser = () => {
             const role = roleChoice.role
             params.push(role)
 
-            const managerSql = `SELECT * FROM employee`
+            const managerSql = `SELECT * FROM employee`;
 
             connection.query(managerSql, (err, data) => {
               if (err) throw err
 
               const managers = data.map(({ id, first_name, last_name }) => ({ name: first_name + ''+ last_name, value:id}))
-
+                console.log(managers)
               inquirer.prompt([
                 {
                   type: 'list',
