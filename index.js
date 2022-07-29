@@ -233,7 +233,7 @@ const promptUser = () => {
               if (err) throw err
 
               const managers = data.map(({ id, first_name, last_name }) => ({ name: first_name + ''+ last_name, value:id}))
-                console.log(managers)
+    
               inquirer.prompt([
                 {
                   type: 'list',
