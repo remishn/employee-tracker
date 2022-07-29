@@ -1,29 +1,31 @@
+USE employee_db
+
 INSERT INTO department (name)
 VALUES 
-('IT'),
-('Finance & Accounting'),
-('Sales & Marketing'),
-('Operations');
+('Hematology'),
+('Chemistry'),
+('Microbiology'),
+('Specials');
 
 INSERT INTO role (title, salary, department_id)
 VALUES
-('Full Stack Developer', 80000, 1),
-('Software Engineer', 120000, 1),
-('Accountant', 10000, 2), 
-('Finanical Analyst', 150000, 2),
-('Marketing Coordindator', 70000, 3), 
-('Sales Lead', 90000, 3),
-('Project Manager', 100000, 4),
-('Operations Manager', 90000, 4);
+('Supervisor', 100000, 1),
+('Lead', 80000, 1),
+('Customer Service', 75000, 2), 
+('Pathologist', 180000, 2),
+('Secretary', 70000, 3), 
+('Specimen processor', 65000, 3),
+('Phlebotomist', 50000, 1),
+('cytologist', 90000, 4);
 
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUES 
-('Mark', 'Miller', 2, null),
-('Devin', 'Anderson', 1, 1),
-('Mary', 'Brown', 4, null),
-('Ashley', 'Jones', 3, 3),
-('Tyler', 'Moore', 6, null),
-('Ana', 'Sanchez', 5, 5),
-('Lewis', 'Allen', 7, null),
-('Katherine', 'Green', 8, 7);
+('Kim', 'Steven', 2, null),
+('Rud', 'Mary', 1, 1),
+('Mitchelle', 'Mark', 4, null),
+('Clara', 'Peter', 3, 3),
+('Abdi', 'Sayed', 4, null),
+('Leonard', 'Jason', 5, 5),
+('Janice', 'Mathew', 7, null),
+('Lori', 'Black', 8, 7);
