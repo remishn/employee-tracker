@@ -18,7 +18,7 @@ const promptUser = () => {
       {
         type: 'list',
         name: 'choices', 
-        message: 'What would you like to do?',
+        message: 'select from the following choices',
         choices: ['View all departments', 
                   'View all roles', 
                   'View all employees', 
@@ -26,7 +26,6 @@ const promptUser = () => {
                   'Add a role', 
                   'Add an employee', 
                   'Update an employee role',
-                  'View employees by department',
                   'No Action']
       }
     ])
@@ -61,20 +60,7 @@ const promptUser = () => {
         if (choices === "Update an employee role") {
           updateEmployee()
         }
-  
-        if (choices === "Update an employee manager") {
-          updateManager()
-        }
-  
-        if (choices === "View employees by department") {
-          employeeDepartment()
-        }
-  
-  
-        if (choices === "Delete a role") {
-          deleteRole()
-        }
-  
+
         if (choices === "No Action") {
           connection.end()
       }
@@ -169,7 +155,7 @@ const promptUser = () => {
       .then(answer => {
         const params = [answer.role, answer.salary];
 
-        // from dept table
+        // choose from department table
         const roleSql = `SELECT name, id FROM department`;
 
         connection.query(roleSql, (err, data) => {
@@ -221,7 +207,7 @@ const promptUser = () => {
       ])
       .then(answer => {
         const params = [answer.firstName, answer.lastName]
-        // roles from roles table
+        // choose role from roles table
         const roleSql = `SELECT role.id, role.title FROM role`;
 
         connection.query(roleSql, (err, data) => {
